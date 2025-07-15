@@ -3,7 +3,10 @@
 ## Author: Yang Hu / free_learner@163.com
 
 ## Make the segment line
-segline=$(bash ${BrainFex}/code/ZOTHERS/make_segline.sh)
+if [[ ! -z ${BrainFex} ]]
+then
+    segline=$(bash ${BrainFex}/code/ZOTHERS/make_segline.sh)
+fi
 
 ## Print script usage
 Usage () {
@@ -40,7 +43,7 @@ else
              DARRAY+=("$OPTARG")
              ;;
          *) ## invalid option
-             echo "ERROR: unrecognized option -$OPT $OPTARG"
+             echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
              exit 1
              ;;
       esac
@@ -54,7 +57,7 @@ then
     do
       if [[ ! -f ${CURR_FILE} ]]
       then 
-          echo "File ${CURR_FILE} doesn't exist. Please check !!!"
+          echo "ERROR: File ${CURR_FILE} doesn't exist. Please check !!!"
           exit 1
       fi
     done
@@ -67,7 +70,7 @@ then
     do
       if [[ ! -d ${CURR_DIR} ]]
       then
-          echo "Folder ${CURR_DIR} doesn't exist. Please check !!!"
+          echo "ERROR: Folder ${CURR_DIR} doesn't exist. Please check !!!"
           exit 1
       fi
     done
