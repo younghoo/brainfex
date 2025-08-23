@@ -12,7 +12,7 @@ fi
 Usage () {
 cat <<USAGE
 $segline
-This script calculates local gyrification index (lgi)
+This script calculates local gyrification index (LGI)
 $segline
 Usage example:
 bash $0 
@@ -52,15 +52,15 @@ then
     exit 1
 fi
 
-## Run the calculation of lgi
+## Run the calculation of LGI
 export SUBJECTS_DIR=$(dirname ${RECONOUT})
 SUBJECT=$(basename ${RECONOUT})
 recon-all -s ${SUBJECT} -localGI
 
-## Check the success of lgi calculation
+## Check the success of LGI calculation
 if [[ ! -f ${RECONOUT}/surf/lh.pial_lgi ]] || [[ ! -f ${RECONOUT}/surf/rh.pial_lgi ]]
 then
-    echo "ERROR: The calculation of lgi failed. Please check !!!"
+    echo "ERROR: The calculation of LGI failed. Please check !!!"
     exit 1
 fi
 
