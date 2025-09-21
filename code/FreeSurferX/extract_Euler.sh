@@ -55,6 +55,13 @@ else
     done
 fi
 
+## If BrainFex environment variable set?
+if [[ -z ${BrainFex} ]]
+then
+    echo "ERROR: Please set the BrainFex environment variable !!!"
+    exit 1
+fi
+
 ## If INPUT/OUTPUT folders exist?
 bash ${BrainFex}/code/ZOTHERS/check_inout.sh -b ${RECONOUT} -b ${OUTDIR}
 if [[ $? -eq 1 ]]

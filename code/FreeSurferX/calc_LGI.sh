@@ -45,6 +45,13 @@ else
     done
 fi
 
+## If BrainFex environment variable set?
+if [[ -z ${BrainFex} ]]
+then
+    echo "ERROR: Please set the BrainFex environment variable !!!"
+    exit 1
+fi
+
 ## If INPUT folder exist?
 bash ${BrainFex}/code/ZOTHERS/check_inout.sh -b ${RECONOUT}
 if [[ $? -eq 1 ]]
@@ -63,5 +70,4 @@ then
     echo "ERROR: The calculation of LGI failed. Please check !!!"
     exit 1
 fi
-
 
