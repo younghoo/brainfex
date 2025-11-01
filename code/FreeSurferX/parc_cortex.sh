@@ -28,6 +28,8 @@ Required arguments:
         -c: left annot or gcs file
         -d: right annot or gcs file
         -e: output prefix
+Optional arguments:
+        -f: map from surface to volume space (1/0; default 1)
 $segline
 USAGE
     exit 1
@@ -39,7 +41,7 @@ then
     Usage >&2
     exit 1
 else
-    while getopts "a:b:c:d:e:" OPT
+    while getopts "a:b:c:d:e:f:" OPT
     do
       case $OPT in
             a) ## recon-all output folder
@@ -56,6 +58,9 @@ else
             ;;
             e) ## output prefix
                 OUTFIX=$OPTARG
+            ;;
+            f) ## map from surface to volume space
+                SURF2VOL=$OPTARG
             ;;
             *) ## invalid option
                 echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
@@ -77,6 +82,12 @@ bash ${BrainFex}/code/ZOTHERS/check_inout.sh -b ${RECONOUT}
 if [[ $? -eq 1 ]]
 then
     exit 1
+fi
+
+## If map cortical parcellation to volume space
+if [[ -z ${SURF2VOL} ]]
+then
+    SURF2VOL=1
 fi
 
 ## Set FreeSurfer environment variables
@@ -124,6 +135,12 @@ then
       done
 fi
 
+## Map cortical parcellation to volume space
+if [[ $SURF2VOL -eq 1 ]]
+then
+    mri_aparc2aseg --s ${SUBJECT} --o ${SUBJECTS_DIR}/${SUBJECT}/mri/${OUTFIX}+aseg.mgz --volmask --annot ${OUTFIX}
+fi
+
 ## Check whether the output files exist
 bash ${BrainFex}/code/ZOTHERS/check_inout.sh \
     -a ${SUBJECTS_DIR}/${SUBJECT}/label/lh.${OUTFIX}.annot \
@@ -135,3 +152,12 @@ then
     exit 1
 fi
 
+## If map to volume space, check the additional output file
+if [[ $SURF2VOL -eq 1 ]]
+then
+    bash ${BrainFex}/code/ZOTHERS/check_inout.sh -a ${SUBJECTS_DIR}/${SUBJECT}/mri/${OUTFIX}+aseg.mgz
+fi
+if [[ $? -eq 1 ]]
+then
+    exit 1
+fi
