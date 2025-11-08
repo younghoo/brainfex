@@ -1,5 +1,5 @@
 library(stringr)
-## Merge lh and rh features, and remove interesting data
+## Merge lh and rh features, and remove uninteresting data
 ## Get the commandline arguments
 cmd_args <- commandArgs(trailingOnly = TRUE)
 lh_fname <- cmd_args[1]
