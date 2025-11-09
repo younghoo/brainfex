@@ -1,4 +1,3 @@
-library(stringr)
 ## Merge lh and rh features, and remove uninteresting data
 ## Get the commandline arguments
 cmd_args <- commandArgs(trailingOnly = TRUE)
@@ -29,8 +28,8 @@ for (curr_hemi in c('lh', 'rh')){
 }
 ## Refine column names
 names(all_dat) <- stringr::str_remove(names(all_dat), '_(thickness|area|volume|meancurv|gauscurv|curvind|foldind)')
-names(all_dat) <- stringr::str_replace_all(names(all_dat), fixed('&'), '_and_')
-names(all_dat) <- stringr::str_replace_all(names(all_dat), fixed('-'), '_')
+names(all_dat) <- stringr::str_replace_all(names(all_dat), stringr::fixed('&'), '_and_')
+names(all_dat) <- stringr::str_replace_all(names(all_dat), stringr::fixed('-'), '_')
 ## Save
 write.table(all_dat, out_fname, quote=FALSE, row.names=FALSE, col.names=TRUE)
 
