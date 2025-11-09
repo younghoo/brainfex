@@ -1,0 +1,15 @@
+NodeID,NodeName
+N01,lh_thalamus
+N02,lh_caudate
+N03,lh_putamen
+N04,lh_pallidum
+N05,lh_hippocampus
+N06,lh_amygdala
+N07,lh_accumbens
+N08,rh_thalamus
+N09,rh_caudate
+N10,rh_putamen
+N11,rh_pallidum
+N12,rh_hippocampus
+N13,rh_amygdala
+N14,rh_accumbens
