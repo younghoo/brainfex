@@ -131,7 +131,7 @@ else
 fi
 
 ## Combine lh and rh features, and remove uninteresting data
-Rscript ${BrainFex}/code/FreeSurferX/ZR/merge_feature.R ${OUTDIR}/lh_${PARCNAME}_${MEASNAME}.txt ${OUTDIR}/rh_${PARCNAME}_${MEASNAME}.txt ${OUTDIR}/${OUTFILE}
+Rscript ${BrainFex}/code/FreeSurferX/ZR/merge_cortical_feature.R ${OUTDIR}/lh_${PARCNAME}_${MEASNAME}.txt ${OUTDIR}/rh_${PARCNAME}_${MEASNAME}.txt ${OUTDIR}/${OUTFILE}
 
 ## Remove intermediate files
 rm ${OUTDIR}/?h_${PARCNAME}_${MEASNAME}.txt
