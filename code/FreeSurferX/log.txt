@@ -1,0 +1,12 @@
+1. check_env.sh: check FreeSurfer environment
+2. run_recon.sh: run default recon-all pipeline
+3. extract_TIV.sh: extract TIV measure
+4. extract_Euler.sh: extract Euler number
+5. extract_tissue.sh: extract tissue masks
+6. calc_LGI.sh: calculate LGI feature
+7. parc_cortex.sh: parcellate cortex using external atlases
+8. extract_cortical_feature.sh: extract cortical features
+9. extract_subcort_volume.sh: extract subcortical volume feature
+10. ZR/extract_cortical_feature.R: extract cortical features in final form
+11. ZR/extract_subcort_volume.R: extract subcortical features in final form
+
