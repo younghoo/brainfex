@@ -6,12 +6,11 @@
 
 ## Function to make the segment line
 make_segline() {
-  echo $(printf '%.s'$1 $(seq 1 $2))
+    echo $(printf '%.s'$1 $(seq 1 $2))
 }
 
 ## Make the line
 CHAR='-'
 NC=50
 make_segline $CHAR $NC
-
 

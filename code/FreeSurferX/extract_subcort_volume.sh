@@ -10,7 +10,7 @@ fi
 
 ## Print script usage
 Usage () {
-cat <<USAGE
+    cat <<USAGE
 $segline
 This script extracts subcortical volume from recon-all output and a parcellation atlas
 $segline
@@ -42,23 +42,23 @@ then
 else
     while getopts "a:b:c:d:" OPT
     do
-      case $OPT in
+        case $OPT in
             a) ## recon-all output folder
                 RECONOUT=$OPTARG
-            ;;
+                ;;
             b) ## parcellation atlas name
                 PARCNAME=$OPTARG
-            ;;
+                ;;
             c) ## output folder
                 OUTDIR=$OPTARG
-            ;;
+                ;;
             d) ## output filename
                 OUTFILE=$OPTARG
-            ;;
+                ;;
             *) ## invalid option
                 echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
                 exit 1
-            ;;
+                ;;
       esac
     done
 fi
@@ -98,3 +98,4 @@ then
     echo "ERROR: the extraction of subcortical volume failed. Please check !!!"
     exit 1
 fi
+

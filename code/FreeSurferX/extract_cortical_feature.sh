@@ -10,7 +10,7 @@ fi
 
 ## Print script usage
 Usage () {
-cat <<USAGE
+    cat <<USAGE
 $segline
 This script extracts cortical features from recon-all output and a parcellation atlas
 $segline
@@ -56,27 +56,27 @@ then
 else
     while getopts "a:b:c:d:e:" OPT
     do
-      case $OPT in
+        case $OPT in
             a) ## recon-all output folder
                 RECONOUT=$OPTARG
-            ;;
+                ;;
             b) ## parcellation atlas name
                 PARCNAME=$OPTARG
-            ;;
+                ;;
             c) ## cortical feature name
                 MEASNAME=$OPTARG
-            ;;
+                ;;
             d) ## output folder
                 OUTDIR=$OPTARG
-            ;;
+                ;;
             e) ## output filename
                 OUTFILE=$OPTARG
-            ;;
+                ;;
             *) ## invalid option
                 echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
                 exit 1
-            ;;
-      esac
+                ;;
+        esac
     done
 fi
 
@@ -146,3 +146,4 @@ then
     echo "ERROR: the extraction of cortical feature failed. Please check !!!"
     exit 1
 fi
+

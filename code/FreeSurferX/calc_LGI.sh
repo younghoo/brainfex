@@ -10,7 +10,7 @@ fi
 
 ## Print script usage
 Usage () {
-cat <<USAGE
+    cat <<USAGE
 $segline
 This script calculates local gyrification index (LGI)
 $segline
@@ -33,15 +33,15 @@ then
 else
     while getopts "a:" OPT
     do
-      case $OPT in
-          a) ## recon-all output folder
-             RECONOUT=$OPTARG
-             ;;
-          *) ## invalid option
-             echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
-             exit 1
-             ;;
-      esac
+        case $OPT in
+            a) ## recon-all output folder
+                RECONOUT=$OPTARG
+                ;;
+            *) ## invalid option
+                echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
+                exit 1
+                ;;
+        esac
     done
 fi
 

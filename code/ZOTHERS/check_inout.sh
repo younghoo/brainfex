@@ -10,7 +10,7 @@ fi
 
 ## Print script usage
 Usage () {
-cat <<USAGE
+    cat <<USAGE
 $segline
 This script checks whether input/output files & folders exist
 $segline
@@ -35,18 +35,18 @@ then
 else
     while getopts "a:b:" OPT
     do
-      case $OPT in
-         a) ## files
-             FARRAY+=("$OPTARG")
-             ;;
-         b) ## folders
-             DARRAY+=("$OPTARG")
-             ;;
-         *) ## invalid option
-             echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
-             exit 1
-             ;;
-      esac
+        case $OPT in
+            a) ## files
+                FARRAY+=("$OPTARG")
+                ;;
+            b) ## folders
+                DARRAY+=("$OPTARG")
+                ;;
+            *) ## invalid option
+                echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
+                exit 1
+                ;;
+        esac
     done
 fi
 
@@ -55,11 +55,11 @@ if [[ ! -z ${FARRAY} ]]
 then
     for CURR_FILE in "${FARRAY[@]}"
     do
-      if [[ ! -f ${CURR_FILE} ]]
-      then 
-          echo "ERROR: File ${CURR_FILE} doesn't exist. Please check !!!"
-          exit 1
-      fi
+        if [[ ! -f ${CURR_FILE} ]]
+        then 
+            echo "ERROR: File ${CURR_FILE} doesn't exist. Please check !!!"
+            exit 1
+        fi
     done
 fi
 
@@ -68,12 +68,11 @@ if [[ ! -z ${DARRAY} ]]
 then
     for CURR_DIR in "${DARRAY[@]}"
     do
-      if [[ ! -d ${CURR_DIR} ]]
-      then
-          echo "ERROR: Folder ${CURR_DIR} doesn't exist. Please check !!!"
-          exit 1
-      fi
+        if [[ ! -d ${CURR_DIR} ]]
+        then
+            echo "ERROR: Folder ${CURR_DIR} doesn't exist. Please check !!!"
+            exit 1
+        fi
     done
 fi
-
 

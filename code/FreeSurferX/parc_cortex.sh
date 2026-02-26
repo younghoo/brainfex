@@ -10,7 +10,7 @@ fi
 
 ## Print script usage
 Usage () {
-cat <<USAGE
+    cat <<USAGE
 $segline
 This script parcellates the cortex based on recon-all output and a parcellation atlas
 $segline
@@ -43,30 +43,30 @@ then
 else
     while getopts "a:b:c:d:e:f:" OPT
     do
-      case $OPT in
+        case $OPT in
             a) ## recon-all output folder
                 RECONOUT=$OPTARG
-            ;;
+                ;;
             b) ## atlas file type
                 ATLASTYPE=$OPTARG
-            ;;
+                ;;
             c) ## left atlas file
                 LHFILE=$OPTARG
-            ;;
+                ;;
             d) ## right atlas file
                 RHFILE=$OPTARG
-            ;;
+                ;;
             e) ## output prefix
                 OUTFIX=$OPTARG
-            ;;
+                ;;
             f) ## map from surface to volume space
                 SURF2VOL=$OPTARG
-            ;;
+                ;;
             *) ## invalid option
                 echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
                 exit 1
-            ;;
-      esac
+                ;;
+        esac
     done
 fi
 
@@ -161,3 +161,4 @@ if [[ $? -eq 1 ]]
 then
     exit 1
 fi
+

@@ -5,7 +5,7 @@
 ## Make the segment line
 if [[ ! -z ${BrainFex} ]]
 then
-        segline=$(bash ${BrainFex}/code/ZOTHERS/make_segline.sh)
+    segline=$(bash ${BrainFex}/code/ZOTHERS/make_segline.sh)
 fi
 
 ## Print script usage
@@ -33,92 +33,92 @@ Optional arguments:
         -h: slice ranges in fractions of image dimension (start,step,end; default 0.35,0.1,0.65)
 $segline
 USAGE
-        exit 1
+exit 1
 }
 
 ## Parse arguments
 if [[ $# -lt 8 ]]
 then
-        Usage >&2
-        exit 1
+    Usage >&2
+    exit 1
 else
-        while getopts "a:b:c:d:e:f:g:h:" OPT
-        do
-                case $OPT in
-                a) ## input as background
+    while getopts "a:b:c:d:e:f:g:h:" OPT
+    do
+        case $OPT in
+            a) ## input as background
                 INPUT_BG=$OPTARG
                 ;;
-                b) ## input as foreground
+            b) ## input as foreground
                 INPUT_FG=$OPTARG
                 ;;
-                c) ## output directory
+            c) ## output directory
                 OUTDIR=$OPTARG
                 ;;
-                d) ## output filename
+            d) ## output filename
                 OUTFILE=$OPTARG
                 ;;
-                e) ## reorient to standard orientation
+            e) ## reorient to standard orientation
                 REORIENT=$OPTARG
                 ;;
-                f) ## spatial layout
+            f) ## spatial layout
                 LAYOUT=$OPTARG
                 ;;
-                g) ## visual mode
+            g) ## visual mode
                 VISMODE=$OPTARG
                 ;;
-                h) ## slice range
+            h) ## slice range
                 SRANGE=$OPTARG
                 ;;
-                *) ## invalid option
+            *) ## invalid option
                 echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
                 exit 1
                 ;;
-                esac
-        done
+        esac
+    done
 fi
 
 ## If BrainFex environment variable set?
 if [[ -z ${BrainFex} ]]
 then
-        echo "ERROR: Please set the BrainFex environment variable !!!"
-        exit 1
+    echo "ERROR: Please set the BrainFex environment variable !!!"
+    exit 1
 fi
 
 ## If INPUT/OUTPUT folders exist?
 if [[ ${INPUT_FG} == "none" ]]
 then
-        PARAMS="-a ${INPUT_BG} -b ${OUTDIR}"
+    PARAMS="-a ${INPUT_BG} -b ${OUTDIR}"
 else
-        PARAMS="-a ${INPUT_BG} -a ${INPUT_FG} -b ${OUTDIR}"
+    PARAMS="-a ${INPUT_BG} -a ${INPUT_FG} -b ${OUTDIR}"
 fi
 bash ${BrainFex}/code/ZOTHERS/check_inout.sh ${PARAMS}
 if [[ $? -eq 1 ]]
 then
-        exit 1
+    exit 1
 fi
 
 ## If reorient to standard space
 if [[ -z ${REORIENT} ]]
 then
-        REORIENT=1
+    REORIENT=1
 fi
 
 ## If set the spatial layout
 if [[ -z ${LAYOUT} ]]
 then
-        LAYOUT=1
+    LAYOUT=1
 fi
 
 ## If set the visual mode
 if [[ -z ${VISMODE} ]]
 then
-        VISMODE=1
+    VISMODE=1
 fi
 
 ## If set slice range
 if [[ -z ${SRANGE} ]]
 then
-        SRANGE=0.35,0.1,0.65
+    SRANGE=0.35,0.1,0.65
 fi
 
 ## Make temporary folder
@@ -130,40 +130,40 @@ cd ${TMPODIR}
 ## Prepare data for plot
 if [[ ${INPUT_FG} == "none" ]]
 then
-        MinMax=($(fslstats ${INPUT_BG} -r))
-        fslmaths ${INPUT_BG} -max ${MinMax[0]} -min ${MinMax[1]} data_vis.nii.gz
+    MinMax=($(fslstats ${INPUT_BG} -r))
+    fslmaths ${INPUT_BG} -max ${MinMax[0]} -min ${MinMax[1]} data_vis.nii.gz
 else
-        ## Show the full data
-        if [[ ${VISMODE} -eq 1 ]]
-        then
-                MinMax=($(fslstats ${INPUT_FG} -r))
-                overlay 1 0 ${INPUT_BG} -a ${INPUT_FG} ${MinMax[0]} ${MinMax[1]} data_vis.nii.gz
-        fi
-        ## Show image border only
-        if [[ ${VISMODE} -eq 2  ]]
-        then
-                fslmaths ${INPUT_FG} -ero fg_ero.nii.gz
-                fslmaths ${INPUT_FG} -sub fg_ero.nii.gz -abs -bin fg_border.nii.gz
-                overlay 0 0 ${INPUT_BG} -a fg_border.nii.gz 1 1 data_vis.nii.gz
-        fi
-        ## Show image edge only
-        if [[ ${VISMODE} -eq 3 ]]
-        then
-                fslmaths ${INPUT_FG} -dog_edge 1 1.6 fg_edge.nii.gz
-                overlay 0 0 ${INPUT_BG} -a fg_edge.nii.gz 1 1 data_vis.nii.gz
-        fi
-        ## Show image mask
-        if [[ ${VISMODE} -eq 4 ]]
-        then
-                fslmaths ${INPUT_FG} -abs -bin fg_mask.nii.gz
-                overlay 1 0 ${INPUT_BG} -a fg_mask.nii.gz 1 1 data_vis.nii.gz
-        fi
+    ## Show the full data
+    if [[ ${VISMODE} -eq 1 ]]
+    then
+        MinMax=($(fslstats ${INPUT_FG} -r))
+        overlay 1 0 ${INPUT_BG} -a ${INPUT_FG} ${MinMax[0]} ${MinMax[1]} data_vis.nii.gz
+    fi
+    ## Show image border only
+    if [[ ${VISMODE} -eq 2  ]]
+    then
+        fslmaths ${INPUT_FG} -ero fg_ero.nii.gz
+        fslmaths ${INPUT_FG} -sub fg_ero.nii.gz -abs -bin fg_border.nii.gz
+        overlay 0 0 ${INPUT_BG} -a fg_border.nii.gz 1 1 data_vis.nii.gz
+    fi
+    ## Show image edge only
+    if [[ ${VISMODE} -eq 3 ]]
+    then
+        fslmaths ${INPUT_FG} -dog_edge 1 1.6 fg_edge.nii.gz
+        overlay 0 0 ${INPUT_BG} -a fg_edge.nii.gz 1 1 data_vis.nii.gz
+    fi
+    ## Show image mask
+    if [[ ${VISMODE} -eq 4 ]]
+    then
+        fslmaths ${INPUT_FG} -abs -bin fg_mask.nii.gz
+        overlay 1 0 ${INPUT_BG} -a fg_mask.nii.gz 1 1 data_vis.nii.gz
+    fi
 fi
 
 ## Reorient to standard orientation
 if [[ ${REORIENT} -eq 1 ]]
 then
-        fslreorient2std data_vis.nii.gz data_vis.nii.gz
+    fslreorient2std data_vis.nii.gz data_vis.nii.gz
 fi
 
 ## Plot the slices
@@ -173,47 +173,47 @@ slice_index=($(seq 1 ${#slice_seq[@]}))
 PARAMS=""
 for curr_idx in "${slice_index[@]}"
 do
-        pos_idx=$((${curr_idx} - 1))
-        curr_slice=${slice_seq[${pos_idx}]}
-        PARAMS+="-x ${curr_slice} X${curr_idx}.png "
-        PARAMS+="-y ${curr_slice} Y${curr_idx}.png "
-        PARAMS+="-z ${curr_slice} Z${curr_idx}.png "
+    pos_idx=$((${curr_idx} - 1))
+    curr_slice=${slice_seq[${pos_idx}]}
+    PARAMS+="-x ${curr_slice} X${curr_idx}.png "
+    PARAMS+="-y ${curr_slice} Y${curr_idx}.png "
+    PARAMS+="-z ${curr_slice} Z${curr_idx}.png "
 done
 slicer data_vis.nii.gz -u ${PARAMS}
 
 ## Merge all slices
 if [[ ${LAYOUT} -eq 1 ]]
 then
-        for curr_dim in X Y Z
-        do
-                PARAMS=""
-                for curr_idx in "${slice_index[@]}"
-                do
-                        if [[ ${curr_idx} == 1 ]]
-                        then
-                                PARAMS+="${curr_dim}${curr_idx}.png "
-                        else
-                                PARAMS+="- ${curr_dim}${curr_idx}.png "
-                        fi
-                done
-                pngappend ${PARAMS} ${curr_dim}_view.png
-        done
-        pngappend X_view.png + Y_view.png + Z_view.png ${OUTDIR}/${OUTFILE}
-else
+    for curr_dim in X Y Z
+    do
         PARAMS=""
-        for curr_dim in X Y Z
+        for curr_idx in "${slice_index[@]}"
         do
-                for curr_idx in "${slice_index[@]}"
-                do
-                        if [[ ${curr_idx} == 1 ]] && [[ ${curr_dim} == X ]]
-                        then
-                                PARAMS+="${curr_dim}${curr_idx}.png "
-                        else
-                                PARAMS+="+ ${curr_dim}${curr_idx}.png "
-                        fi
-                done
+            if [[ ${curr_idx} == 1 ]]
+            then
+                PARAMS+="${curr_dim}${curr_idx}.png "
+            else
+                PARAMS+="- ${curr_dim}${curr_idx}.png "
+            fi
         done
-        pngappend ${PARAMS} ${OUTDIR}/${OUTFILE}
+        pngappend ${PARAMS} ${curr_dim}_view.png
+    done
+    pngappend X_view.png + Y_view.png + Z_view.png ${OUTDIR}/${OUTFILE}
+else
+    PARAMS=""
+    for curr_dim in X Y Z
+    do
+        for curr_idx in "${slice_index[@]}"
+        do
+            if [[ ${curr_idx} == 1 ]] && [[ ${curr_dim} == X ]]
+            then
+                PARAMS+="${curr_dim}${curr_idx}.png "
+            else
+                PARAMS+="+ ${curr_dim}${curr_idx}.png "
+            fi
+        done
+    done
+    pngappend ${PARAMS} ${OUTDIR}/${OUTFILE}
 fi
 
 ## Remove temporary folder

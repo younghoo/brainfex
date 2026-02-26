@@ -10,7 +10,7 @@ fi
 
 ## Print script usage
 Usage () {
-cat <<USAGE
+    cat <<USAGE
 $segline
 This script runs the default pipeline of recon-all
 $segline
@@ -40,27 +40,27 @@ then
 else
     while getopts "a:b:c:d:e:" OPT
     do
-      case $OPT in
-          a) ## T1 input file
-             INPUT=$OPTARG
-             ;;
-          b) ## output directory
-             OUTDIR=$OPTARG
-             ;;
-          c) ## folder to save recon-all results
-             RECONOUT=$OPTARG
-             ;;
-          d) ## T2 file
-             T2IN=$OPTARG
-             ;;
-          e) ## FLAIR file
-             FLAIRIN=$OPTARG
-             ;;
-          *) ## invalid option
-             echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
-             exit 1
-             ;;
-      esac
+        case $OPT in
+            a) ## T1 input file
+                INPUT=$OPTARG
+                ;;
+            b) ## output directory
+                OUTDIR=$OPTARG
+                ;;
+            c) ## folder to save recon-all results
+                RECONOUT=$OPTARG
+                ;;
+            d) ## T2 file
+                T2IN=$OPTARG
+                ;;
+            e) ## FLAIR file
+                FLAIRIN=$OPTARG
+                ;;
+            *) ## invalid option
+                echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
+                exit 1
+                ;;
+        esac
     done
 fi
 
@@ -115,5 +115,4 @@ then
     echo "ERROR: The default pipeline of recon-all failed. Please check !!!"
     exit 1
 fi
-
 

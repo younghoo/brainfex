@@ -10,7 +10,7 @@ fi
 
 ## Print script usage
 Usage () {
-cat <<USAGE
+    cat <<USAGE
 $segline
 This script extracts tissue masks from recon-all output
 $segline
@@ -37,20 +37,20 @@ then
 else
     while getopts "a:b:c:" OPT
     do
-      case $OPT in
+        case $OPT in
             a) ## recon-all output folder
                 RECONOUT=$OPTARG
-            ;;
+                ;;
             b) ## output folder
                 OUTDIR=$OPTARG
-            ;;
+                ;;
             c) ## output prefix
                 OUTFIX=$OPTARG
-            ;;
+                ;;
             *) ## invalid option
                 echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
                 exit 1
-            ;;
+                ;;
       esac
     done
 fi
@@ -82,7 +82,7 @@ mri_binarize --i ${RECONOUT}/mri/aseg.mgz --o ${OUTDIR}/${OUTFIX}_ventmask.nii.g
 
 ## Check whether the output files exist
 bash ${BrainFex}/code/ZOTHERS/check_inout.sh -a ${OUTDIR}/${OUTFIX}_bfc.nii.gz -a ${OUTDIR}/${OUTFIX}_brainmask.nii.gz \
-        -a ${OUTDIR}/${OUTFIX}_gmmask.nii.gz -a ${OUTDIR}/${OUTFIX}_wmmask.nii.gz -a ${OUTDIR}/${OUTFIX}_ventmask.nii.gz
+    -a ${OUTDIR}/${OUTFIX}_gmmask.nii.gz -a ${OUTDIR}/${OUTFIX}_wmmask.nii.gz -a ${OUTDIR}/${OUTFIX}_ventmask.nii.gz
 if [[ $? -eq 1 ]]
 then
     exit 1

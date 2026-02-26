@@ -10,7 +10,7 @@ fi
 
 ## Print script usage
 Usage () {
-cat <<USAGE
+    cat <<USAGE
 $segline
 This script extracts total intracranial volume (TIV) from recon-all output
 $segline
@@ -37,21 +37,21 @@ then
 else
     while getopts "a:b:c:" OPT
     do
-      case $OPT in
+        case $OPT in
             a) ## recon-all output folder
                 RECONOUT=$OPTARG
-            ;;
+                ;;
             b) ## output folder
                 OUTDIR=$OPTARG
-            ;;
+                ;;
             c) ## output filename
                 OUTFILE=$OPTARG
-            ;;
+                ;;
             *) ## invalid option
                 echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
                 exit 1
-            ;;
-      esac
+                ;;
+        esac
     done
 fi
 
@@ -82,3 +82,4 @@ then
     echo "ERROR: the extraction of TIV failed. Please check !!!"
     exit 1
 fi
+
