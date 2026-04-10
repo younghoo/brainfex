@@ -29,7 +29,7 @@ Required arguments:
 Optional arguments:
         -e: reorient to standard orientation (0/1; default 1)
         -f: spatial layout (1/2: vertical/horizontal; default 1)
-        -g: visual mode for the foreground image (1/2/3/4: full/border/edge/mask; default 1)
+        -g: visual mode for the foreground image (1/2/3/4/5: full/border/edge/mask/reg; default 1)
         -h: slice ranges in fractions of image dimension (start,step,end; default 0.35,0.1,0.65)
 $segline
 USAGE
@@ -127,6 +127,16 @@ TMPODIR=${OUTDIR}/tmpo_$$_$(date +%s)_${RANDOM}
 mkdir -p ${TMPODIR}
 cd ${TMPODIR}
 
+## Reorient to standard orientation
+if [[ ${REORIENT} -eq 1 ]]
+then
+    fslreorient2std ${INPUT_BG} data_bg.nii.gz; INPUT_BG=data_bg.nii.gz
+    if [[ ${INPUT_FG} != "none" ]]
+    then
+        fslreorient2std ${INPUT_FG} data_fg.nii.gz; INPUT_FG=data_fg.nii.gz
+    fi
+fi
+
 ## Prepare data for plot
 if [[ ${INPUT_FG} == "none" ]]
 then
@@ -160,12 +170,6 @@ else
     fi
 fi
 
-## Reorient to standard orientation
-if [[ ${REORIENT} -eq 1 ]]
-then
-    fslreorient2std data_vis.nii.gz data_vis.nii.gz
-fi
-
 ## Plot the slices
 IFS=',' read -r slice_start slice_step slice_end <<< "${SRANGE}"
 slice_seq=($(seq ${slice_start} ${slice_step} ${slice_end}))
@@ -179,7 +183,13 @@ do
     PARAMS+="-y ${curr_slice} Y${curr_idx}.png "
     PARAMS+="-z ${curr_slice} Z${curr_idx}.png "
 done
-slicer data_vis.nii.gz -u ${PARAMS}
+## The reg mode is dedicated to check registration accuracy 
+if [[ ${VISMODE} -eq 5 ]]
+then
+    slicer ${INPUT_BG} ${INPUT_FG} -u ${PARAMS}
+else
+    slicer data_vis.nii.gz -u ${PARAMS}
+fi
 
 ## Merge all slices
 if [[ ${LAYOUT} -eq 1 ]]
