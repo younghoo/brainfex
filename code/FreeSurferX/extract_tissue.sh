@@ -71,7 +71,7 @@ fi
 
 ## Extract brain mask
 mri_convert ${RECONOUT}/mri/nu.mgz ${OUTDIR}/${OUTFIX}_bfc.nii.gz
-mri_binarize --i ${RECONOUT}/mri/aseg.mgz --min 1 --o ${OUTDIR}/${OUTFIX}_brainmask.nii.gz --dilate 1
+mri_binarize --i ${RECONOUT}/mri/aseg.mgz --min 1 --o ${OUTDIR}/${OUTFIX}_brainmask.nii.gz
 mri_mask ${RECONOUT}/mri/nu.mgz ${OUTDIR}/${OUTFIX}_brainmask.nii.gz ${OUTDIR}/${OUTFIX}_brain.nii.gz
 
 ## Extract GM/WM/ventricle masks
