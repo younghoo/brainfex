@@ -17,10 +17,10 @@ $segline
 Usage example:
 bash $0 
         -a /home/alex/reconout
-        -b Schaefer
+        -b DK
         -c thickness
         -d /home/alex/output
-        -e Schaefer_ThickAvg.txt
+        -e DK_ThickAvg.txt
 $segline
 Required arguments:
         -a: recon-all output folder
@@ -34,15 +34,15 @@ Parcellation atlases available:
         2. Destrieux
 $segline
 Cortical features available: 
-        1. thickness
-        2. area
-        3. volume
-        4. meancurv
-        5. gauscurv
-        6. foldind
-        7. curvind
-        8. sulc
-        9. pial_lgi
+        1. thickness, mean thickness
+        2. area, surface area
+        3. volume, gray matter volume
+        4. meancurv, integrated rectified mean curvature
+        5. gauscurv, integrated rectified gaussian curvature
+        6. foldind, folding index
+        7. curvind, intrinsic curvature index
+        8. sulc, mean sulcal depth
+        9. pial_lgi, mean LGI
 $segline
 USAGE
     exit 1
@@ -131,7 +131,7 @@ else
 fi
 
 ## Combine lh and rh features, and remove uninteresting data
-Rscript ${BrainFex}/code/FreeSurferX/ZR/merge_cortical_feature.R ${OUTDIR}/lh_${PARCNAME}_${MEASNAME}.txt ${OUTDIR}/rh_${PARCNAME}_${MEASNAME}.txt ${OUTDIR}/${OUTFILE}
+Rscript ${BrainFex}/code/FreeSurferX/ZR/extract_cortical_feature.R ${OUTDIR}/lh_${PARCNAME}_${MEASNAME}.txt ${OUTDIR}/rh_${PARCNAME}_${MEASNAME}.txt ${OUTDIR}/${OUTFILE}
 
 ## Remove intermediate files
 rm ${OUTDIR}/?h_${PARCNAME}_${MEASNAME}.txt
