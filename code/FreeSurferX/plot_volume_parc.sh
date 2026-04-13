@@ -143,7 +143,7 @@ IFS=',' read -r slice_start slice_step slice_end <<< "${SRANGE}"
 slice_seq=($(seq ${slice_start} ${slice_step} ${slice_end}))
 slice_index=($(seq 1 ${#slice_seq[@]}))
 ## Export the freeview options into a text file
-echo "freeview -v ${IN_BG} ${IN_PARC}:colormap=lut:lut=${FSLUT} --layout 1" >> fv_cmd.txt
+echo "freeview -v ${IN_BG} ${IN_PARC}:colormap=lut:lut=${FSLUT} --layout 1" > fv_cmd.txt
 for curr_idx in "${slice_index[@]}"
 do
     pos_idx=$((${curr_idx} - 1))
