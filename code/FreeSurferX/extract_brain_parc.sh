@@ -119,7 +119,7 @@ if [[ ${PARCNAME} == Aseg* ]]
 then
     FSLUT=${BrainFex}/data/atlases/Aseg/${PARCNAME}_FS_LUT.txt
 fi
-Rscript ${BrainFex}/code/FreeSurferX/ZR/extract_brain_parc.R ${OUTDIR}/tmpo_${PARCNAME}.nii.gz ${FSLUT} ${OUTDIR}/${OUTFILE}
+Rscript ${BrainFex}/code/FreeSurferX/ZR/extract_brain_parc.R ${OUTDIR}/tmpo_${PARCNAME}.nii.gz ${FSLUT} ${OUTDIR}/${OUTFILE} 1
 
 ## Remove temporary files
 rm ${OUTDIR}/tmpo_${PARCNAME}.nii.gz

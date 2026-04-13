@@ -4,6 +4,7 @@ cmd_args <- commandArgs(trailingOnly = TRUE)
 in_fname <- cmd_args[1]
 lut_fname <- cmd_args[2]
 out_fname <- cmd_args[3]
+do_remap <- cmd_args[4]
 ## Load the original parcellation data
 in_parc <- RNifti::readNifti(in_fname)
 ## Load FS LUT file
@@ -15,8 +16,10 @@ new_idx <- seq_along(old_idx)
 out_parc <- in_parc
 out_parc[!out_parc %in% old_idx] <- 0
 ## Loop each region and re-encode the label index
-for (curr_idx in new_idx){
-    out_parc[in_parc == old_idx[curr_idx]] <- new_idx[curr_idx]
+if (do_remap != 0 ){
+    for (curr_idx in new_idx){
+        out_parc[in_parc == old_idx[curr_idx]] <- new_idx[curr_idx]
+    }
 }
 ## Save
 RNifti::writeNifti(out_parc, out_fname, datatype = 'int32')
