@@ -85,6 +85,7 @@ bash ${BrainFex}/code/ZOTHERS/check_inout.sh -a ${OUTDIR}/${OUTFIX}_bfc.nii.gz -
     -a ${OUTDIR}/${OUTFIX}_gmmask.nii.gz -a ${OUTDIR}/${OUTFIX}_wmmask.nii.gz -a ${OUTDIR}/${OUTFIX}_ventmask.nii.gz
 if [[ $? -eq 1 ]]
 then
+    echo "ERROR: The extraction of tissue masks failed. Please check !!!"
     exit 1
 fi
 
