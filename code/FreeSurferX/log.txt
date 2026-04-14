@@ -9,4 +9,8 @@
 9. extract_subcort_volume.sh: extract subcortical volume feature
 10. ZR/extract_cortical_feature.R: extract cortical features in final form
 11. ZR/extract_subcort_volume.R: extract subcortical features in final form
+12. extract_brain_parc.sh: extract brain parcellation masks
+13. ZR/extract_brain_parc.R: extract brain parcellation masks in final form
+14. plot_volume_parc.sh: make a figure of volume parcellation for quality check
+15. plot_surface_parc.sh: make a figure of surface parcellation for quality check
 
