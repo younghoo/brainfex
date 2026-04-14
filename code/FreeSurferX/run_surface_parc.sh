@@ -12,7 +12,7 @@ fi
 Usage () {
     cat <<USAGE
 $segline
-This script parcellates the cortex based on recon-all output and a parcellation atlas
+This script parcellates the cortex based on recon-all output and a surface parcellation atlas
 $segline
 Usage example:
 bash $0 
@@ -149,6 +149,7 @@ bash ${BrainFex}/code/ZOTHERS/check_inout.sh \
     -a ${SUBJECTS_DIR}/${SUBJECT}/stats/rh.${OUTFIX}.stats
 if [[ $? -eq 1 ]]
 then
+    echo "ERROR: The cortical parcellation failed. Please check !!!"
     exit 1
 fi
 
@@ -159,6 +160,7 @@ then
 fi
 if [[ $? -eq 1 ]]
 then
+    echo "ERROR: The mapping of surface parcellation to volume space failed. Please check !!!"
     exit 1
 fi
 
