@@ -28,7 +28,7 @@ Required arguments:
         -d: output filename
 Optional arguments:
         -e: surface type (pial/white/inflated; default pial)
-        -f: visual mode (simple/full; default simple)
+        -f: visual mode (basic/full; default basic)
 $segline
 Parcellation atlases available: 
         1. DK
@@ -97,7 +97,7 @@ fi
 ## If set the visual mode
 if [[ -z ${VISMODE} ]]
 then
-    VISMODE=simple
+    VISMODE=basic
 fi
 
 ## Make temporary folder
@@ -126,8 +126,8 @@ then
     RH_PARC=${RECONOUT}/label/rh.aparc.a2009s.annot
 fi
 
-## For simple mode, plot lateral and medial views
-if [[ ${VISMODE} == simple ]]
+## For basic mode, plot lateral and medial views only
+if [[ ${VISMODE} == basic ]]
 then
     ## Plot the left surface in different views
     echo "freeview -f ${LH_SURF}:annot=${LH_PARC} --layout 1 -viewport 3d" > fv_cmd.txt
