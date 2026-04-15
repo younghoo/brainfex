@@ -20,7 +20,7 @@ bash $0
         -b DK
         -c 1
         -d /home/alex/output
-        -e t1_DK.png
+        -e DK.png
 $segline
 Required arguments:
         -a: recon-all output folder
@@ -29,12 +29,14 @@ Required arguments:
         -d: output folder
         -e: output filename
 Optional arguments:
-        -f: slice ranges in fractions of image dimension (start,step,end; default 0.35,0.1,0.65)
+        -f: slice ranges in fractions of image dimension (start,step,end)
+            (default 0.35,0.1,0.65 for cortical; 0.4,0.05,0.6 for subcortical)
 $segline
-Parcellation atlases available: 
+Cortical parcellations available: 
         1. DK
         2. Destrieux
-        3. AsegN14
+Subcortical parcellations available:
+        1. AsegN14
 $segline
 USAGE
     exit 1
@@ -92,7 +94,14 @@ fi
 ## If set slice range
 if [[ -z ${SRANGE} ]]
 then
-    SRANGE=0.35,0.1,0.65
+    if [[ ${ATLASTYPE} -eq 1 ]]
+    then
+        SRANGE=0.35,0.1,0.65
+    fi
+    if [[ ${ATLASTYPE} -eq 2 ]]
+    then
+        SRANGE=0.4,0.05,0.6
+    fi
 fi
 
 ## Make temporary folder
@@ -110,16 +119,6 @@ if [[ ${ATLASTYPE} -eq 1 ]]
 then
     IN_PARC=${RECONOUT}/mri/${PARCNAME}+aseg.mgz
     FSLUT=${BrainFex}/data/atlases/${PARCNAME}/${PARCNAME}_FS_LUT.txt
-    ## Deal with DK Atlas
-    if [[ ${PARCNAME} == DK ]]
-    then
-        IN_PARC=${RECONOUT}/mri/aparc+aseg.mgz
-    fi
-    ## Deal with Destrieux Atlas
-    if [[ ${PARCNAME} == Destrieux ]]
-    then
-        IN_PARC=${RECONOUT}/mri/aparc.a2009s+aseg.mgz
-    fi
 fi
 ## Deal with subcortical parcellation
 if [[ ${ATLASTYPE} -eq 2 ]]
@@ -129,13 +128,12 @@ then
     ## Deal with Aseg Atlas
     if [[ ${PARCNAME} == Aseg* ]]
     then
-        IN_PARC=${RECONOUT}/mri/aseg.mgz
         FSLUT=${BrainFex}/data/atlases/Aseg/${PARCNAME}_FS_LUT.txt
     fi
 fi
 ## Select regions of interest
 mri_convert ${IN_PARC} tmpo_${PARCNAME}.nii.gz
-Rscript ${BrainFex}/code/FreeSurferX/ZR/extract_brain_parc.R tmpo_${PARCNAME}.nii.gz ${FSLUT} tmpo_${PARCNAME}_clean.nii.gz 0
+Rscript ${BrainFex}/code/FreeSurferX/ZR/clean_parc_mask.R tmpo_${PARCNAME}.nii.gz ${FSLUT} tmpo_${PARCNAME}_clean.nii.gz 0
 IN_PARC=tmpo_${PARCNAME}_clean.nii.gz
 
 ## Plot the slices

@@ -19,7 +19,7 @@ bash $0
         -a /home/alex/reconout
         -b DK
         -c /home/alex/output
-        -d t1_DK.png
+        -d DK.png
 $segline
 Required arguments:
         -a: recon-all output folder
@@ -30,10 +30,9 @@ Optional arguments:
         -e: surface type (pial/white/inflated; default pial)
         -f: visual mode (basic/full; default basic)
 $segline
-Parcellation atlases available: 
+Cortical parcellations available: 
         1. DK
         2. Destrieux
-        3. AsegN14
 $segline
 USAGE
     exit 1
@@ -113,18 +112,6 @@ RH_SURF=${RECONOUT}/surf/rh.${SURFTYPE}
 ## Find the parcellation file
 LH_PARC=${RECONOUT}/label/lh.${PARCNAME}.annot
 RH_PARC=${RECONOUT}/label/rh.${PARCNAME}.annot
-## Deal with DK Atlas
-if [[ ${PARCNAME} == DK ]]
-then
-    LH_PARC=${RECONOUT}/label/lh.aparc.annot
-    RH_PARC=${RECONOUT}/label/rh.aparc.annot
-fi
-## Deal with Destrieux Atlas
-if [[ ${PARCNAME} == Destrieux ]]
-then
-    LH_PARC=${RECONOUT}/label/lh.aparc.a2009s.annot
-    RH_PARC=${RECONOUT}/label/rh.aparc.a2009s.annot
-fi
 
 ## For basic mode, plot lateral and medial views only
 if [[ ${VISMODE} == basic ]]
