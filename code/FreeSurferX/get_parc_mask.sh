@@ -12,7 +12,7 @@ fi
 Usage () {
     cat <<USAGE
 $segline
-This script extracts a specified brain parcellation mask from recon-all output 
+This script extracts a specified parcellation mask from recon-all output 
 $segline
 Usage example:
 bash $0 
@@ -20,7 +20,7 @@ bash $0
         -b DK
         -c 1
         -d /home/alex/output
-        -e t1_DK.nii.gz
+        -e DK.nii.gz
 $segline
 Required arguments:
         -a: recon-all output folder
@@ -29,10 +29,11 @@ Required arguments:
         -d: output folder
         -e: output filename
 $segline
-Parcellation atlases available: 
+Cortical parcellations available: 
         1. DK
         2. Destrieux
-        3. AsegN14
+Subcortical parcellations available:
+        1. AsegN14
 $segline
 USAGE
     exit 1
@@ -84,32 +85,17 @@ then
     exit 1
 fi
 
-## Convert parcellation from FreeSurfer's MGZ to NIFTI format
 ## Deal with cortical parcellation
 if [[ ${ATLASTYPE} -eq 1 ]]
 then
     IN_PARC=${RECONOUT}/mri/${PARCNAME}+aseg.mgz
-    ## Deal with DK Atlas
-    if [[ ${PARCNAME} == DK ]]
-    then
-        IN_PARC=${RECONOUT}/mri/aparc+aseg.mgz
-    fi
-    ## Deal with Destrieux Atlas
-    if [[ ${PARCNAME} == Destrieux ]]
-    then
-        IN_PARC=${RECONOUT}/mri/aparc.a2009s+aseg.mgz
-    fi
     mri_convert ${IN_PARC} ${OUTDIR}/tmpo_${PARCNAME}.nii.gz
 fi
+
 ## Deal with subcortical parcellation
 if [[ ${ATLASTYPE} -eq 2 ]]
 then
     IN_PARC=${RECONOUT}/mri/${PARCNAME}.mgz
-    ## Deal with Aseg Atlas
-    if [[ ${PARCNAME} == Aseg* ]]
-    then
-        IN_PARC=${RECONOUT}/mri/aseg.mgz
-    fi
     mri_convert ${IN_PARC} ${OUTDIR}/tmpo_${PARCNAME}.nii.gz
 fi
 
@@ -119,7 +105,7 @@ if [[ ${PARCNAME} == Aseg* ]]
 then
     FSLUT=${BrainFex}/data/atlases/Aseg/${PARCNAME}_FS_LUT.txt
 fi
-Rscript ${BrainFex}/code/FreeSurferX/ZR/extract_brain_parc.R ${OUTDIR}/tmpo_${PARCNAME}.nii.gz ${FSLUT} ${OUTDIR}/${OUTFILE} 1
+Rscript ${BrainFex}/code/FreeSurferX/ZR/clean_parc_mask.R ${OUTDIR}/tmpo_${PARCNAME}.nii.gz ${FSLUT} ${OUTDIR}/${OUTFILE} 1
 
 ## Remove temporary files
 rm ${OUTDIR}/tmpo_${PARCNAME}.nii.gz
