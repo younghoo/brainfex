@@ -192,38 +192,23 @@ else
 fi
 
 ## Merge all slices
+## Stack views vertically
 if [[ ${LAYOUT} -eq 1 ]]
 then
     for curr_dim in X Y Z
     do
-        PARAMS=""
-        for curr_idx in "${slice_index[@]}"
-        do
-            if [[ ${curr_idx} == 1 ]]
-            then
-                PARAMS+="${curr_dim}${curr_idx}.png "
-            else
-                PARAMS+="- ${curr_dim}${curr_idx}.png "
-            fi
-        done
-        pngappend ${PARAMS} ${curr_dim}_view.png
+        convert ${curr_dim}*.png +append ${curr_dim}_view.png
     done
-    pngappend X_view.png + Y_view.png + Z_view.png ${OUTDIR}/${OUTFILE}
-else
-    PARAMS=""
+    convert *view.png -append ${OUTDIR}/${OUTFILE}
+fi
+## Stack views horizontally
+if [[ ${LAYOUT} -eq 2 ]]
+then
     for curr_dim in X Y Z
     do
-        for curr_idx in "${slice_index[@]}"
-        do
-            if [[ ${curr_idx} == 1 ]] && [[ ${curr_dim} == X ]]
-            then
-                PARAMS+="${curr_dim}${curr_idx}.png "
-            else
-                PARAMS+="+ ${curr_dim}${curr_idx}.png "
-            fi
-        done
+        convert ${curr_dim}*.png -append ${curr_dim}_view.png
     done
-    pngappend ${PARAMS} ${OUTDIR}/${OUTFILE}
+    convert *view.png +append ${OUTDIR}/${OUTFILE}
 fi
 
 ## Remove temporary folder
