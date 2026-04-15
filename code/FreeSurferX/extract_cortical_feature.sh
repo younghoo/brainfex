@@ -20,7 +20,7 @@ bash $0
         -b DK
         -c thickness
         -d /home/alex/output
-        -e DK_ThickAvg.txt
+        -e DK_thickness.txt
 $segline
 Required arguments:
         -a: recon-all output folder
@@ -29,10 +29,9 @@ Required arguments:
         -d: output folder
         -e: output filename
 $segline
-Parcellation atlases available: 
+Cortical arcellations available: 
         1. DK
         2. Destrieux
-$segline
 Cortical features available: 
         1. thickness, mean thickness
         2. area, surface area
@@ -94,17 +93,13 @@ then
     exit 1
 fi
 
-## Deal with atlas names of default parcellations in FreeSurfer
-## Reference: https://surfer.nmr.mgh.harvard.edu/fswiki/CorticalParcellation
-## In recon-all, "aparc" stands for the DK Atlas.
-if [[ ${PARCNAME} == 'DK' ]]
+## Calculate LGI feature if required
+if [[ ${MEASNAME} == 'pial_lgi' ]]
 then
-    PARCNAME=aparc
-fi
-## In recon-all, "aparc.a2009s" stands for the Destrieux Atlas.
-if [[ ${PARCNAME} == 'Destrieux' ]]
-then
-    PARCNAME=aparc.a2009s
+    if [[ ! -f ${RECONOUT}/surf/lh.pial_lgi ]] || [[ ! -f ${RECONOUT}/surf/rh.pial_lgi ]]
+    then
+        bash ${BrainFex}/code/FreeSurferX/calc_LGI.sh -a ${RECONOUT}
+    fi
 fi
 
 ## Set FreeSurfer environment variables
@@ -131,7 +126,7 @@ else
 fi
 
 ## Combine lh and rh features, and remove uninteresting data
-Rscript ${BrainFex}/code/FreeSurferX/ZR/extract_cortical_feature.R ${OUTDIR}/lh_${PARCNAME}_${MEASNAME}.txt ${OUTDIR}/rh_${PARCNAME}_${MEASNAME}.txt ${OUTDIR}/${OUTFILE}
+Rscript ${BrainFex}/code/FreeSurferX/ZR/clean_cortical_feature.R ${OUTDIR}/lh_${PARCNAME}_${MEASNAME}.txt ${OUTDIR}/rh_${PARCNAME}_${MEASNAME}.txt ${OUTDIR}/${OUTFILE}
 
 ## Remove intermediate files
 rm ${OUTDIR}/?h_${PARCNAME}_${MEASNAME}.txt

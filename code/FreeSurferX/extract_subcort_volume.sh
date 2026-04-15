@@ -19,7 +19,7 @@ bash $0
         -a /home/alex/reconout
         -b AsegN14
         -c /home/alex/output
-        -d AsegN14_Volume.txt
+        -d AsegN14_volume.txt
 $segline
 Required arguments:
         -a: recon-all output folder
@@ -27,7 +27,7 @@ Required arguments:
         -c: output folder
         -d: output filename
 $segline
-Parcellation atlases available: 
+Subcortical parcellations available: 
         1. AsegN14: 14 structures from Aseg Atlas including bilateral caudate, putamen, pallidum, hippocampus, amygdala and accumbens
 $segline
 USAGE
@@ -81,16 +81,12 @@ fi
 export SUBJECTS_DIR=$(dirname ${RECONOUT})
 SUBJECT=$(basename ${RECONOUT})
 
-## Deal with AsegN14 Atlas
-if [[ ${PARCNAME} == 'AsegN14' ]]
-then
-    asegstats2table --subjects ${SUBJECT} --meas volume --tablefile ${OUTDIR}/Aseg_volume.txt
-    Rscript ${BrainFex}/code/FreeSurferX/ZR/extract_subcort_volume.R ${PARCNAME} ${OUTDIR}/Aseg_volume.txt ${OUTDIR}/${OUTFILE}
-    if [[ ${OUTFILE} != 'Aseg_volume.txt' ]]
-    then
-        rm ${OUTDIR}/Aseg_volume.txt
-    fi
-fi
+## Extract volume
+asegstats2table --subjects ${SUBJECT} --meas volume --stats ${PARCNAME}.stats --tablefile ${OUTDIR}/tmpo_${PARCNAME}_volume.txt
+Rscript ${BrainFex}/code/FreeSurferX/ZR/clean_subcort_volume.R ${PARCNAME} ${OUTDIR}/tmpo_${PARCNAME}_volume.txt ${OUTDIR}/${OUTFILE}
+
+## Remove intermediate files
+rm ${OUTDIR}/tmpo_${PARCNAME}_volume.txt
 
 ## Check the success of volume extraction
 if [[ ! -f ${OUTDIR}/${OUTFILE} ]]
