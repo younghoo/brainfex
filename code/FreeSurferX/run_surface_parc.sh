@@ -27,7 +27,7 @@ Required arguments:
         -b: atlas type (1/2: annot file/gcs file)
         -c: left annot or gcs file
         -d: right annot or gcs file
-        -e: output prefix
+        -e: output atlas name
 Optional arguments:
         -f: map from surface to volume space (1/0; default 1)
 $segline
@@ -56,8 +56,8 @@ else
             d) ## right atlas file
                 RHFILE=$OPTARG
                 ;;
-            e) ## output prefix
-                OUTFIX=$OPTARG
+            e) ## output atlas name
+                OUTNAME=$OPTARG
                 ;;
             f) ## map from surface to volume space
                 SURF2VOL=$OPTARG
@@ -107,11 +107,11 @@ then
             CURRFILE=${RHFILE}
         fi
         mri_surf2surf --srcsubject fsaverage --trgsubject $SUBJECT --hemi ${curr_hemi} --sval-annot ${CURRFILE} \
-            --tval ${SUBJECTS_DIR}/${SUBJECT}/label/${curr_hemi}.${OUTFIX}.annot
+            --tval ${SUBJECTS_DIR}/${SUBJECT}/label/${curr_hemi}.${OUTNAME}.annot
         ## Calculate summary statistics of morphological features based on the parcellation result
         mris_anatomical_stats -mgz -cortex ${SUBJECTS_DIR}/${SUBJECT}/label/${curr_hemi}.cortex.label \
-            -f ${SUBJECTS_DIR}/${SUBJECT}/stats/${curr_hemi}.${OUTFIX}.stats -b \
-            -a ${SUBJECTS_DIR}/${SUBJECT}/label/${curr_hemi}.${OUTFIX}.annot ${SUBJECT} ${curr_hemi} white
+            -f ${SUBJECTS_DIR}/${SUBJECT}/stats/${curr_hemi}.${OUTNAME}.stats -b \
+            -a ${SUBJECTS_DIR}/${SUBJECT}/label/${curr_hemi}.${OUTNAME}.annot ${SUBJECT} ${curr_hemi} white
     done
     rm ${SUBJECTS_DIR}/fsaverage
 fi
@@ -128,25 +128,25 @@ then
             CURRFILE=${RHFILE}
         fi        
         mris_ca_label -l ${SUBJECTS_DIR}/${SUBJECT}/label/${curr_hemi}.cortex.label ${SUBJECT} ${curr_hemi} \
-            ${SUBJECTS_DIR}/${SUBJECT}/surf/${curr_hemi}.sphere.reg ${CURRFILE} ${SUBJECTS_DIR}/${SUBJECT}/label/${curr_hemi}.${OUTFIX}.annot
+            ${SUBJECTS_DIR}/${SUBJECT}/surf/${curr_hemi}.sphere.reg ${CURRFILE} ${SUBJECTS_DIR}/${SUBJECT}/label/${curr_hemi}.${OUTNAME}.annot
         mris_anatomical_stats -mgz -cortex ${SUBJECTS_DIR}/${SUBJECT}/label/${curr_hemi}.cortex.label \
-            -f ${SUBJECTS_DIR}/${SUBJECT}/stats/${curr_hemi}.${OUTFIX}.stats -b \
-            -a ${SUBJECTS_DIR}/${SUBJECT}/label/${curr_hemi}.${OUTFIX}.annot ${SUBJECT} ${curr_hemi} white
+            -f ${SUBJECTS_DIR}/${SUBJECT}/stats/${curr_hemi}.${OUTNAME}.stats -b \
+            -a ${SUBJECTS_DIR}/${SUBJECT}/label/${curr_hemi}.${OUTNAME}.annot ${SUBJECT} ${curr_hemi} white
       done
 fi
 
 ## Map cortical parcellation to volume space
 if [[ $SURF2VOL -eq 1 ]]
 then
-    mri_aparc2aseg --s ${SUBJECT} --o ${SUBJECTS_DIR}/${SUBJECT}/mri/${OUTFIX}+aseg.mgz --volmask --annot ${OUTFIX}
+    mri_aparc2aseg --s ${SUBJECT} --o ${SUBJECTS_DIR}/${SUBJECT}/mri/${OUTNAME}+aseg.mgz --volmask --annot ${OUTNAME}
 fi
 
 ## Check whether the output files exist
 bash ${BrainFex}/code/ZOTHERS/check_inout.sh \
-    -a ${SUBJECTS_DIR}/${SUBJECT}/label/lh.${OUTFIX}.annot \
-    -a ${SUBJECTS_DIR}/${SUBJECT}/label/rh.${OUTFIX}.annot \
-    -a ${SUBJECTS_DIR}/${SUBJECT}/stats/lh.${OUTFIX}.stats \
-    -a ${SUBJECTS_DIR}/${SUBJECT}/stats/rh.${OUTFIX}.stats
+    -a ${SUBJECTS_DIR}/${SUBJECT}/label/lh.${OUTNAME}.annot \
+    -a ${SUBJECTS_DIR}/${SUBJECT}/label/rh.${OUTNAME}.annot \
+    -a ${SUBJECTS_DIR}/${SUBJECT}/stats/lh.${OUTNAME}.stats \
+    -a ${SUBJECTS_DIR}/${SUBJECT}/stats/rh.${OUTNAME}.stats
 if [[ $? -eq 1 ]]
 then
     echo "ERROR: The cortical parcellation failed. Please check !!!"
@@ -156,7 +156,7 @@ fi
 ## If map to volume space, check the additional output file
 if [[ $SURF2VOL -eq 1 ]]
 then
-    bash ${BrainFex}/code/ZOTHERS/check_inout.sh -a ${SUBJECTS_DIR}/${SUBJECT}/mri/${OUTFIX}+aseg.mgz
+    bash ${BrainFex}/code/ZOTHERS/check_inout.sh -a ${SUBJECTS_DIR}/${SUBJECT}/mri/${OUTNAME}+aseg.mgz
 fi
 if [[ $? -eq 1 ]]
 then
