@@ -18,7 +18,7 @@ Usage example:
 bash $0 
         -a /home/alex/reconout
         -b /home/alex/output
-        -c Euler.txt
+        -c EulerNum.txt
 $segline
 Required arguments:
         -a: recon-all output folder
