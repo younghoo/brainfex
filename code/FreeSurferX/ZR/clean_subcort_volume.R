@@ -12,7 +12,7 @@ if (atlas_name == 'AsegN14'){
     all_dat <- all_dat[, in_idx]
     ## Refine column names
     names(all_dat) <- stringr::str_replace_all(names(all_dat), stringr::fixed('-'), '_')
-    names(all_dat) <- stringr::str_remove_all(names(all_dat), c('Left'='lh', 'Right'='rh'))
+    names(all_dat) <- stringr::str_replace_all(names(all_dat), c('Left'='lh', 'Right'='rh'))
     names(all_dat) <- stringr::str_remove_all(names(all_dat), '_area')
     names(all_dat) <- tolower(names(all_dat))
     ## Save
