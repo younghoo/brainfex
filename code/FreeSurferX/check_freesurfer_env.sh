@@ -7,7 +7,7 @@
 ## If FreeSurfer installed?
 if [[ ! -z ${FREESURFER_HOME} ]]
 then
-    Version=$(cat ${FREESURFER_HOME}/build-stamp.txt)
+    Version=$(cat ${FREESURFER_HOME}/build-stamp.txt | cut -d '-' -f4)
     echo $Version
 else
     echo "Please install FreeSurfer !!!"
