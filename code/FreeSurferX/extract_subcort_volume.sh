@@ -56,7 +56,7 @@ else
                 OUTFILE=$OPTARG
                 ;;
             *) ## invalid option
-                echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
+                echo "BrainFex Error: Unrecognized option -$OPT $OPTARG. Please check !!!"
                 exit 1
                 ;;
       esac
@@ -66,7 +66,7 @@ fi
 ## If BrainFex environment variable set?
 if [[ -z ${BrainFex} ]]
 then
-    echo "ERROR: Please set the BrainFex environment variable !!!"
+    echo "BrainFex Error: Please set the BrainFex environment variable !!!"
     exit 1
 fi
 
@@ -91,7 +91,7 @@ rm ${OUTDIR}/tmpo_${PARCNAME}_volume.txt
 ## Check the success of volume extraction
 if [[ ! -f ${OUTDIR}/${OUTFILE} ]]
 then
-    echo "ERROR: the extraction of subcortical volume failed. Please check !!!"
+    echo "BrainFex Error: The extraction of subcortical volume failed. Please check !!!"
     exit 1
 fi
 

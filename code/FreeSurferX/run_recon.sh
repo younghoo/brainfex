@@ -57,7 +57,7 @@ else
                 FLAIRIN=$OPTARG
                 ;;
             *) ## invalid option
-                echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
+                echo "BrainFex Error: Unrecognized option -$OPT $OPTARG. Please check !!!"
                 exit 1
                 ;;
         esac
@@ -67,7 +67,7 @@ fi
 ## If BrainFex environment variable set?
 if [[ -z ${BrainFex} ]]
 then
-    echo "ERROR: Please set the BrainFex environment variable !!!"
+    echo "BrainFex Error: Please set the BrainFex environment variable !!!"
     exit 1
 fi
 
@@ -112,7 +112,7 @@ rm ${SUBJECTS_DIR}/fsaverage
 STATUS=$(tail -n 1 ${SUBJECTS_DIR}/${SUBJECT}/scripts/recon-all.log | grep "finished without error" | wc -l)
 if [[ ${STATUS} -ne 1 ]]
 then
-    echo "ERROR: The default pipeline of recon-all failed. Please check !!!"
+    echo "BrainFex Error: The default pipeline of recon-all failed. Please check !!!"
     exit 1
 fi
 

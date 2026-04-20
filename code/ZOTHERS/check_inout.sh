@@ -43,7 +43,7 @@ else
                 DARRAY+=("$OPTARG")
                 ;;
             *) ## invalid option
-                echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
+                echo "BrainFex Error: Unrecognized option -$OPT $OPTARG. Please check !!!"
                 exit 1
                 ;;
         esac
@@ -57,7 +57,7 @@ then
     do
         if [[ ! -f ${CURR_FILE} ]]
         then 
-            echo "ERROR: File ${CURR_FILE} doesn't exist. Please check !!!"
+            echo "BrainFex Error: File ${CURR_FILE} doesn't exist. Please check !!!"
             exit 1
         fi
     done
@@ -70,7 +70,7 @@ then
     do
         if [[ ! -d ${CURR_DIR} ]]
         then
-            echo "ERROR: Folder ${CURR_DIR} doesn't exist. Please check !!!"
+            echo "BrainFex Error: Folder ${CURR_DIR} doesn't exist. Please check !!!"
             exit 1
         fi
     done

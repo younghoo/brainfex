@@ -54,7 +54,7 @@ else
                 ATLASTYPE=$OPTARG
                 ;;
             *) ## invalid option
-                echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
+                echo "BrainFex Error: Unrecognized option -$OPT $OPTARG. Please check !!!"
                 exit 1
                 ;;
         esac
@@ -64,7 +64,7 @@ fi
 ## If BrainFex environment variable set?
 if [[ -z ${BrainFex} ]]
 then
-    echo "ERROR: Please set the BrainFex environment variable !!!"
+    echo "BrainFex Error: Please set the BrainFex environment variable !!!"
     exit 1
 fi
 
@@ -120,7 +120,7 @@ else
 fi
 if [[ $? -eq 1 ]]
 then
-    echo "ERROR: The parcellation of built-in atlases failed. Please check !!!"
+    echo "BrainFex Error: The parcellation of built-in atlases failed. Please check !!!"
     exit 1
 fi
 

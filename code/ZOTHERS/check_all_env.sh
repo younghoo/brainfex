@@ -7,13 +7,13 @@
 ## If BrainFex environment variable set?
 if [[ -z ${BrainFex} ]]
 then
-    echo "ERROR: Please set the BrainFex environment variable !!!"
+    echo "BrainFex Error: Please set the BrainFex environment variable !!!"
     exit 1
 else
     segline=$(bash ${BrainFex}/code/ZOTHERS/make_segline.sh)
 fi
 
-## Check the date and OS
+## Check the OS
 echo $segline
 uname -a
 

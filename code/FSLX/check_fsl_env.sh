@@ -10,7 +10,7 @@ then
     Version=$(cat ${FSLDIR}/etc/fslversion)
     echo $Version
 else
-    echo "Please install FSL !!!"
+    echo "BrainFex Error: Please install FSL !!!"
     exit 1
 fi
 

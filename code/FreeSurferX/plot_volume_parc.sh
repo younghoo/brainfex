@@ -70,7 +70,7 @@ else
                 SRANGE=$OPTARG
                 ;;
             *) ## invalid option
-                echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
+                echo "BrainFex Error: Unrecognized option -$OPT $OPTARG. Please check !!!"
                 exit 1
                 ;;
         esac
@@ -80,7 +80,7 @@ fi
 ## If BrainFex environment variable set?
 if [[ -z ${BrainFex} ]]
 then
-    echo "ERROR: Please set the BrainFex environment variable !!!"
+    echo "BrainFex Error: Please set the BrainFex environment variable !!!"
     exit 1
 fi
 
@@ -169,7 +169,7 @@ rm -r ${TMPODIR}
 ## Check the output file
 if [[ ! -f ${OUTDIR}/${OUTFILE} ]]
 then
-    echo "ERROR: making a figure of volume parcellation failed. Please check !!!"
+    echo "BrainFex Error: Making a figure of volume parcellation failed. Please check !!!"
     exit 1
 fi
 

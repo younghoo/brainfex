@@ -10,7 +10,7 @@ then
     Version=$(cat ${FREESURFER_HOME}/build-stamp.txt | cut -d '-' -f4)
     echo $Version
 else
-    echo "Please install FreeSurfer !!!"
+    echo "BrainFex Error: Please install FreeSurfer !!!"
     exit 1
 fi
 

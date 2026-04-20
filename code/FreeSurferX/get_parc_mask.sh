@@ -64,7 +64,7 @@ else
                 OUTFILE=$OPTARG
                 ;;
             *) ## invalid option
-                echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
+                echo "BrainFex Error: Unrecognized option -$OPT $OPTARG. Please check !!!"
                 exit 1
                 ;;
         esac
@@ -74,7 +74,7 @@ fi
 ## If BrainFex environment variable set?
 if [[ -z ${BrainFex} ]]
 then
-    echo "ERROR: Please set the BrainFex environment variable !!!"
+    echo "BrainFex Error: Please set the BrainFex environment variable !!!"
     exit 1
 fi
 
@@ -113,7 +113,7 @@ rm ${OUTDIR}/tmpo_${PARCNAME}.nii.gz
 ## Check the success of parcellation mask extraction
 if [[ ! -f ${OUTDIR}/${OUTFILE} ]]
 then
-    echo "ERROR: the extraction of brain parcellation mask failed. Please check !!!"
+    echo "BrainFex Error: The extraction of brain parcellation mask failed. Please check !!!"
     exit 1
 fi
 

@@ -63,7 +63,7 @@ else
                 SURF2VOL=$OPTARG
                 ;;
             *) ## invalid option
-                echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
+                echo "BrainFex Error: Unrecognized option -$OPT $OPTARG. Please check !!!"
                 exit 1
                 ;;
         esac
@@ -73,7 +73,7 @@ fi
 ## If BrainFex environment variable set?
 if [[ -z ${BrainFex} ]]
 then
-    echo "ERROR: Please set the BrainFex environment variable !!!"
+    echo "BrainFex Error: Please set the BrainFex environment variable !!!"
     exit 1
 fi
 
@@ -149,7 +149,7 @@ bash ${BrainFex}/code/ZOTHERS/check_inout.sh \
     -a ${SUBJECTS_DIR}/${SUBJECT}/stats/rh.${OUTNAME}.stats
 if [[ $? -eq 1 ]]
 then
-    echo "ERROR: The cortical parcellation failed. Please check !!!"
+    echo "BrainFex Error: The cortical parcellation failed. Please check !!!"
     exit 1
 fi
 
@@ -160,7 +160,7 @@ then
 fi
 if [[ $? -eq 1 ]]
 then
-    echo "ERROR: The mapping of surface parcellation to volume space failed. Please check !!!"
+    echo "BrainFex Error: The mapping of surface parcellation to volume space failed. Please check !!!"
     exit 1
 fi
 

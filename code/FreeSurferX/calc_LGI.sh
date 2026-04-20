@@ -38,7 +38,7 @@ else
                 RECONOUT=$OPTARG
                 ;;
             *) ## invalid option
-                echo "ERROR: Unrecognized option -$OPT $OPTARG. Please check !!!"
+                echo "BrainFex Error: Unrecognized option -$OPT $OPTARG. Please check !!!"
                 exit 1
                 ;;
         esac
@@ -48,7 +48,7 @@ fi
 ## If BrainFex environment variable set?
 if [[ -z ${BrainFex} ]]
 then
-    echo "ERROR: Please set the BrainFex environment variable !!!"
+    echo "BrainFex Error: Please set the BrainFex environment variable !!!"
     exit 1
 fi
 
@@ -67,7 +67,7 @@ recon-all -s ${SUBJECT} -localGI
 ## Check the success of LGI calculation
 if [[ ! -f ${RECONOUT}/surf/lh.pial_lgi ]] || [[ ! -f ${RECONOUT}/surf/rh.pial_lgi ]]
 then
-    echo "ERROR: The calculation of LGI failed. Please check !!!"
+    echo "BrainFex Error: The calculation of LGI failed. Please check !!!"
     exit 1
 fi
 
