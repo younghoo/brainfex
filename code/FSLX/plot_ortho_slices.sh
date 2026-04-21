@@ -218,7 +218,7 @@ rm -r ${TMPODIR}
 ## Check the output file
 if [[ ! -f ${OUTDIR}/${OUTFILE} ]]
 then
-    echo "BrainFex Error: making a figure of orthogonal slices failed. Please check !!!"
+    echo "BrainFex Error: Making a figure of orthogonal slices failed. Please check !!!"
     exit 1
 fi
 
